@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id "jacoco"
+    id "dev.projektor.publish" version "7.2.0"
+}
+
+group 'com.atkinsondev.example'
+version '0.0.1'
+
+subprojects {
+    buildscript {
+        repositories {
+            jcenter()
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+    }
+
+    apply plugin: "kotlin"
+
+    dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+
+        testImplementation("io.strikt:strikt-core:$strikt_version")
+        testImplementation(platform("org.junit:junit-bom:5.7.0"))
+        testImplementation("org.junit.jupiter:junit-jupiter")
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "11"
+    }
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "11"
+    }
+
+    test {
+        useJUnitPlatform()
+
+        testLogging {
+            exceptionFormat = 'full'
+        }
+    }
+}
+
+projektor {
+    serverUrl = "https://projektorlive.herokuapp.com"
+    publishToken = System.getenv("PROJEKTOR_TOKEN") ?: project.findProperty('projektor_publish_token') ?: null
+}
