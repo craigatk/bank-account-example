@@ -8,9 +8,13 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":database"))
+
     implementation "io.ktor:ktor-server-netty:$ktor_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
+
     implementation "io.ktor:ktor-jackson:$ktor_version"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8"
 
     implementation "ch.qos.logback:logback-classic:$logback_version"
 
