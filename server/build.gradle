@@ -1,4 +1,5 @@
-apply plugin: 'application'
+apply plugin: "application"
+apply plugin: "jacoco"
 
 mainClassName = "io.ktor.server.netty.EngineMain"
 
@@ -16,3 +17,6 @@ dependencies {
 
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
+
+jacocoTestReport.dependsOn(test)
+check.dependsOn(jacocoTestReport)
