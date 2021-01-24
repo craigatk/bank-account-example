@@ -1,0 +1,70 @@
+plugins {
+    id "com.avast.gradle.docker-compose" version "0.14.0"
+    id 'nu.studer.jooq' version '5.2'
+    id "org.flywaydb.flyway" version "7.5.1"
+}
+
+dependencies {
+    api "org.flywaydb:flyway-core:7.5.1"
+    api "com.zaxxer:HikariCP:3.4.5"
+    api 'org.jooq:jooq:3.14.4'
+
+    // Needs to be 'compile' scope so the Flyway plugin can see it
+    api "org.postgresql:postgresql:$postgresDriverVersion"
+
+    jooqGenerator "org.postgresql:postgresql:$postgresDriverVersion"
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5433/bankaccountdb'
+    user = 'testuser'
+    password = 'testpass'
+}
+
+jooq {
+    version = '3.14.4'
+
+    configurations {
+        main {
+            generateSchemaSourceOnCompilation = false
+            generationTool {
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:5433/bankaccountdb'
+                    user = 'testuser'
+                    password = 'testpass'
+                }
+                generator {
+                    name = 'org.jooq.codegen.KotlinGenerator'
+                    strategy {
+                        name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                    }
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        excludes = "flyway_schema_history | shedlock"
+                        inputSchema = "public"
+                    }
+                    generate {
+                        relations = true
+                        deprecated = false
+                        records = true
+                        pojos = true
+                        pojosEqualsAndHashCode = true
+                        daos = true
+                    }
+                    target {
+                        packageName = 'example.account.database.generated'
+                        directory = 'src/main/kotlin'
+                    }
+                }
+            }
+        }
+    }
+}
+
+generateJooq.inputs.dir("${projectDir}/src/main/resources/db/migration")
+generateJooq.outputs.cacheIf { true }
+
+flywayMigrate.dependsOn composeUp
+generateJooq.dependsOn flywayMigrate
+generateJooq.finalizedBy composeDownForced

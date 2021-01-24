@@ -4,7 +4,6 @@ apply plugin: "jacoco"
 mainClassName = "io.ktor.server.netty.EngineMain"
 
 repositories {
-    jcenter()
     maven { url 'https://kotlin.bintray.com/ktor' }
 }
 
