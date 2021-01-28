@@ -1,3 +1,7 @@
+plugins {
+    id "org.jlleitschuh.gradle.ktlint" version "9.4.1"
+}
+
 apply plugin: "application"
 apply plugin: "jacoco"
 
@@ -23,3 +27,7 @@ dependencies {
 
 jacocoTestReport.dependsOn(test)
 check.dependsOn(jacocoTestReport)
+
+ktlint {
+    disabledRules = ["no-wildcard-imports"]
+}
