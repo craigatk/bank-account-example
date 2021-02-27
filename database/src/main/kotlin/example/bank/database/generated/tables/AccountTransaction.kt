@@ -5,6 +5,7 @@ package example.bank.database.generated.tables
 
 
 import example.bank.database.generated.Public
+import example.bank.database.generated.enums.TransactionType
 import example.bank.database.generated.keys.ACCOUNT_TRANSACTION_PKEY
 import example.bank.database.generated.keys.ACCOUNT_TRANSACTION__ACCOUNT_TRANSACTION_BANK_ACCOUNT_ID_FKEY
 import example.bank.database.generated.tables.records.AccountTransactionRecord
@@ -81,7 +82,7 @@ open class AccountTransaction(
     /**
      * The column <code>public.account_transaction.transaction_type</code>.
      */
-    val TRANSACTION_TYPE: TableField<AccountTransactionRecord, String?> = createField(DSL.name("transaction_type"), SQLDataType.CLOB.nullable(false), this, "")
+    val TRANSACTION_TYPE: TableField<AccountTransactionRecord, TransactionType?> = createField(DSL.name("transaction_type"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(example.bank.database.generated.enums.TransactionType::class.java), this, "")
 
     private constructor(alias: Name, aliased: Table<AccountTransactionRecord>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<AccountTransactionRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -107,7 +108,14 @@ open class AccountTransaction(
     override fun getPrimaryKey(): UniqueKey<AccountTransactionRecord> = ACCOUNT_TRANSACTION_PKEY
     override fun getKeys(): List<UniqueKey<AccountTransactionRecord>> = listOf(ACCOUNT_TRANSACTION_PKEY)
     override fun getReferences(): List<ForeignKey<AccountTransactionRecord, *>> = listOf(ACCOUNT_TRANSACTION__ACCOUNT_TRANSACTION_BANK_ACCOUNT_ID_FKEY)
-    fun bankAccount(): BankAccount = BankAccount(this, ACCOUNT_TRANSACTION__ACCOUNT_TRANSACTION_BANK_ACCOUNT_ID_FKEY)
+
+    private lateinit var _bankAccount: BankAccount
+    fun bankAccount(): BankAccount {
+        if (!this::_bankAccount.isInitialized)
+            _bankAccount = BankAccount(this, ACCOUNT_TRANSACTION__ACCOUNT_TRANSACTION_BANK_ACCOUNT_ID_FKEY)
+
+        return _bankAccount;
+    }
     override fun `as`(alias: String): AccountTransaction = AccountTransaction(DSL.name(alias), this)
     override fun `as`(alias: Name): AccountTransaction = AccountTransaction(alias, this)
 
@@ -124,5 +132,5 @@ open class AccountTransaction(
     // -------------------------------------------------------------------------
     // Row4 type methods
     // -------------------------------------------------------------------------
-    override fun fieldsRow(): Row4<Long?, Long?, BigDecimal?, String?> = super.fieldsRow() as Row4<Long?, Long?, BigDecimal?, String?>
+    override fun fieldsRow(): Row4<Long?, Long?, BigDecimal?, TransactionType?> = super.fieldsRow() as Row4<Long?, Long?, BigDecimal?, TransactionType?>
 }

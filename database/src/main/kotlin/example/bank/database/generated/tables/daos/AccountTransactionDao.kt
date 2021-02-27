@@ -4,6 +4,7 @@
 package example.bank.database.generated.tables.daos
 
 
+import example.bank.database.generated.enums.TransactionType
 import example.bank.database.generated.tables.AccountTransaction
 import example.bank.database.generated.tables.records.AccountTransactionRecord
 
@@ -66,10 +67,10 @@ open class AccountTransactionDao(configuration: Configuration?) : DAOImpl<Accoun
     /**
      * Fetch records that have <code>transaction_type BETWEEN lowerInclusive AND upperInclusive</code>
      */
-    fun fetchRangeOfTransactionType(lowerInclusive: String?, upperInclusive: String?): List<example.bank.database.generated.tables.pojos.AccountTransaction> = fetchRange(AccountTransaction.ACCOUNT_TRANSACTION.TRANSACTION_TYPE, lowerInclusive, upperInclusive)
+    fun fetchRangeOfTransactionType(lowerInclusive: TransactionType?, upperInclusive: TransactionType?): List<example.bank.database.generated.tables.pojos.AccountTransaction> = fetchRange(AccountTransaction.ACCOUNT_TRANSACTION.TRANSACTION_TYPE, lowerInclusive, upperInclusive)
 
     /**
      * Fetch records that have <code>transaction_type IN (values)</code>
      */
-    fun fetchByTransactionType(vararg values: String): List<example.bank.database.generated.tables.pojos.AccountTransaction> = fetch(AccountTransaction.ACCOUNT_TRANSACTION.TRANSACTION_TYPE, *values)
+    fun fetchByTransactionType(vararg values: TransactionType): List<example.bank.database.generated.tables.pojos.AccountTransaction> = fetch(AccountTransaction.ACCOUNT_TRANSACTION.TRANSACTION_TYPE, *values)
 }

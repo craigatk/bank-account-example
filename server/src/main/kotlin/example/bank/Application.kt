@@ -7,9 +7,7 @@ import example.bank.database.DataSourceConfig
 import example.bank.setup.setup
 import io.ktor.application.*
 import io.ktor.features.*
-import io.ktor.http.*
 import io.ktor.jackson.*
-import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.util.*
 
@@ -35,14 +33,6 @@ fun Application.module(): AppContext {
     }
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
-
-        get("/json/jackson") {
-            call.respond(mapOf("hello" to "world"))
-        }
-
         setup(accountRepository)
     }
 

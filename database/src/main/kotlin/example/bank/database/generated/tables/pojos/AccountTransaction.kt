@@ -4,6 +4,8 @@
 package example.bank.database.generated.tables.pojos
 
 
+import example.bank.database.generated.enums.TransactionType
+
 import java.io.Serializable
 import java.math.BigDecimal
 
@@ -16,7 +18,7 @@ data class AccountTransaction(
     var id: Long? = null, 
     var bankAccountId: Long? = null, 
     var amount: BigDecimal? = null, 
-    var transactionType: String? = null
+    var transactionType: TransactionType? = null
 ): Serializable {
 
 

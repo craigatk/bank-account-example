@@ -4,6 +4,7 @@
 package example.bank.database.generated.tables.daos
 
 
+import example.bank.database.generated.enums.BankAccountType
 import example.bank.database.generated.tables.BankAccount
 import example.bank.database.generated.tables.records.BankAccountRecord
 
@@ -54,10 +55,10 @@ open class BankAccountDao(configuration: Configuration?) : DAOImpl<BankAccountRe
     /**
      * Fetch records that have <code>account_type BETWEEN lowerInclusive AND upperInclusive</code>
      */
-    fun fetchRangeOfAccountType(lowerInclusive: String?, upperInclusive: String?): List<example.bank.database.generated.tables.pojos.BankAccount> = fetchRange(BankAccount.BANK_ACCOUNT.ACCOUNT_TYPE, lowerInclusive, upperInclusive)
+    fun fetchRangeOfAccountType(lowerInclusive: BankAccountType?, upperInclusive: BankAccountType?): List<example.bank.database.generated.tables.pojos.BankAccount> = fetchRange(BankAccount.BANK_ACCOUNT.ACCOUNT_TYPE, lowerInclusive, upperInclusive)
 
     /**
      * Fetch records that have <code>account_type IN (values)</code>
      */
-    fun fetchByAccountType(vararg values: String): List<example.bank.database.generated.tables.pojos.BankAccount> = fetch(BankAccount.BANK_ACCOUNT.ACCOUNT_TYPE, *values)
+    fun fetchByAccountType(vararg values: BankAccountType): List<example.bank.database.generated.tables.pojos.BankAccount> = fetch(BankAccount.BANK_ACCOUNT.ACCOUNT_TYPE, *values)
 }

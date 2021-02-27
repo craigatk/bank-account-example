@@ -1,7 +1,7 @@
 package example.bank.setup
 
 import example.bank.account.BankAccountRepository
-import example.bank.account.BankAccountType
+import example.bank.database.generated.enums.BankAccountType
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.response.*

@@ -7,14 +7,13 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.zaxxer.hikari.HikariDataSource
-import example.bank.database.generated.tables.daos.AccountHolderDao
-import example.bank.database.generated.tables.daos.AccountTransactionDao
-import example.bank.database.generated.tables.daos.BankAccountDao
 import io.ktor.application.*
 import io.ktor.config.*
+import io.ktor.util.*
 import org.jooq.DSLContext
 import org.junit.jupiter.api.AfterEach
 
+@KtorExperimentalAPI
 open class ApplicationTestCase {
     val objectMapper: ObjectMapper = ObjectMapper()
         .registerKotlinModule()
@@ -26,9 +25,7 @@ open class ApplicationTestCase {
     lateinit var dataSource: HikariDataSource
     lateinit var dslContext: DSLContext
 
-    lateinit var accountHolderDao: AccountHolderDao
-    lateinit var bankAccountDao: BankAccountDao
-    lateinit var accountTransactionDao: AccountTransactionDao
+    lateinit var bankAccountTestData: BankAccountTestData
 
     fun createTestApplication(application: Application) {
 
@@ -44,9 +41,7 @@ open class ApplicationTestCase {
         dataSource = appContext.dataSource
         dslContext = appContext.dslContext
 
-        accountHolderDao = AccountHolderDao(dslContext.configuration())
-        bankAccountDao = BankAccountDao(dslContext.configuration())
-        accountTransactionDao = AccountTransactionDao(dslContext.configuration())
+        bankAccountTestData = BankAccountTestData(dslContext)
     }
 
     @AfterEach
