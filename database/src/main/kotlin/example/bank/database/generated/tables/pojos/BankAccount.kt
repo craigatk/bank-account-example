@@ -4,6 +4,8 @@
 package example.bank.database.generated.tables.pojos
 
 
+import example.bank.database.generated.enums.BankAccountType
+
 import java.io.Serializable
 
 
@@ -14,7 +16,7 @@ import java.io.Serializable
 data class BankAccount(
     var id: Long? = null, 
     var accountHolderId: Long? = null, 
-    var accountType: String? = null
+    var accountType: BankAccountType? = null
 ): Serializable {
 
 

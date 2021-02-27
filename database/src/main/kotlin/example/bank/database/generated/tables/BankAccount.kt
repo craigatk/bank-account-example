@@ -5,6 +5,7 @@ package example.bank.database.generated.tables
 
 
 import example.bank.database.generated.Public
+import example.bank.database.generated.enums.BankAccountType
 import example.bank.database.generated.keys.BANK_ACCOUNT_PKEY
 import example.bank.database.generated.keys.BANK_ACCOUNT__BANK_ACCOUNT_ACCOUNT_HOLDER_ID_FKEY
 import example.bank.database.generated.tables.records.BankAccountRecord
@@ -74,7 +75,7 @@ open class BankAccount(
     /**
      * The column <code>public.bank_account.account_type</code>.
      */
-    val ACCOUNT_TYPE: TableField<BankAccountRecord, String?> = createField(DSL.name("account_type"), SQLDataType.CLOB.nullable(false), this, "")
+    val ACCOUNT_TYPE: TableField<BankAccountRecord, BankAccountType?> = createField(DSL.name("account_type"), SQLDataType.VARCHAR.nullable(false).asEnumDataType(example.bank.database.generated.enums.BankAccountType::class.java), this, "")
 
     private constructor(alias: Name, aliased: Table<BankAccountRecord>?): this(alias, null, null, aliased, null)
     private constructor(alias: Name, aliased: Table<BankAccountRecord>?, parameters: Array<Field<*>?>?): this(alias, null, null, aliased, parameters)
@@ -100,7 +101,14 @@ open class BankAccount(
     override fun getPrimaryKey(): UniqueKey<BankAccountRecord> = BANK_ACCOUNT_PKEY
     override fun getKeys(): List<UniqueKey<BankAccountRecord>> = listOf(BANK_ACCOUNT_PKEY)
     override fun getReferences(): List<ForeignKey<BankAccountRecord, *>> = listOf(BANK_ACCOUNT__BANK_ACCOUNT_ACCOUNT_HOLDER_ID_FKEY)
-    fun accountHolder(): AccountHolder = AccountHolder(this, BANK_ACCOUNT__BANK_ACCOUNT_ACCOUNT_HOLDER_ID_FKEY)
+
+    private lateinit var _accountHolder: AccountHolder
+    fun accountHolder(): AccountHolder {
+        if (!this::_accountHolder.isInitialized)
+            _accountHolder = AccountHolder(this, BANK_ACCOUNT__BANK_ACCOUNT_ACCOUNT_HOLDER_ID_FKEY)
+
+        return _accountHolder;
+    }
     override fun `as`(alias: String): BankAccount = BankAccount(DSL.name(alias), this)
     override fun `as`(alias: Name): BankAccount = BankAccount(alias, this)
 
@@ -117,5 +125,5 @@ open class BankAccount(
     // -------------------------------------------------------------------------
     // Row3 type methods
     // -------------------------------------------------------------------------
-    override fun fieldsRow(): Row3<Long?, Long?, String?> = super.fieldsRow() as Row3<Long?, Long?, String?>
+    override fun fieldsRow(): Row3<Long?, Long?, BankAccountType?> = super.fieldsRow() as Row3<Long?, Long?, BankAccountType?>
 }
