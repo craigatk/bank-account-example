@@ -3,6 +3,7 @@ package example.bank
 import com.fasterxml.jackson.databind.*
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import example.bank.account.BankAccountRepository
+import example.bank.account.bankAccount
 import example.bank.database.DataSourceConfig
 import example.bank.setup.setup
 import io.ktor.application.*
@@ -12,7 +13,7 @@ import io.ktor.routing.*
 import io.ktor.util.*
 
 @KtorExperimentalAPI
-fun Application.module(): AppContext {
+fun Application.module(): ModuleContext {
     val applicationConfig = environment.config
 
     val dataSourceConfig = DataSourceConfig.createDataSourceConfig(applicationConfig)
@@ -20,7 +21,7 @@ fun Application.module(): AppContext {
     DataSourceConfig.flywayMigrate(dataSource, dataSourceConfig)
     val dslContext = DataSourceConfig.createDSLContext(dataSource, dataSourceConfig)
 
-    val accountRepository = BankAccountRepository(dslContext)
+    val bankAccountRepository = BankAccountRepository(dslContext)
 
     install(ContentNegotiation) {
         jackson {
@@ -33,10 +34,11 @@ fun Application.module(): AppContext {
     }
 
     routing {
-        setup(accountRepository)
+        bankAccount(bankAccountRepository)
+        setup(bankAccountRepository)
     }
 
-    return AppContext(
+    return ModuleContext(
         dataSource = dataSource,
         dslContext = dslContext
     )
