@@ -23,6 +23,7 @@ import org.jooq.impl.Internal
 // -------------------------------------------------------------------------
 
 val ACCOUNT_HOLDER_PKEY: UniqueKey<AccountHolderRecord> = Internal.createUniqueKey(AccountHolder.ACCOUNT_HOLDER, DSL.name("account_holder_pkey"), arrayOf(AccountHolder.ACCOUNT_HOLDER.ID), true)
+val ACCOUNT_HOLDER_USER_NAME_KEY: UniqueKey<AccountHolderRecord> = Internal.createUniqueKey(AccountHolder.ACCOUNT_HOLDER, DSL.name("account_holder_user_name_key"), arrayOf(AccountHolder.ACCOUNT_HOLDER.USER_NAME), true)
 val ACCOUNT_TRANSACTION_PKEY: UniqueKey<AccountTransactionRecord> = Internal.createUniqueKey(AccountTransaction.ACCOUNT_TRANSACTION, DSL.name("account_transaction_pkey"), arrayOf(AccountTransaction.ACCOUNT_TRANSACTION.ID), true)
 val BANK_ACCOUNT_PKEY: UniqueKey<BankAccountRecord> = Internal.createUniqueKey(BankAccount.BANK_ACCOUNT, DSL.name("bank_account_pkey"), arrayOf(BankAccount.BANK_ACCOUNT.ID), true)
 

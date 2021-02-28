@@ -6,6 +6,7 @@ package example.bank.database.generated.tables
 
 import example.bank.database.generated.Public
 import example.bank.database.generated.enums.TransactionType
+import example.bank.database.generated.indexes.ACCOUNT_TRANSACTION_BANK_ACCOUNT_ID_IDX
 import example.bank.database.generated.keys.ACCOUNT_TRANSACTION_PKEY
 import example.bank.database.generated.keys.ACCOUNT_TRANSACTION__ACCOUNT_TRANSACTION_BANK_ACCOUNT_ID_FKEY
 import example.bank.database.generated.tables.records.AccountTransactionRecord
@@ -17,6 +18,7 @@ import kotlin.collections.List
 import org.jooq.Field
 import org.jooq.ForeignKey
 import org.jooq.Identity
+import org.jooq.Index
 import org.jooq.Name
 import org.jooq.Record
 import org.jooq.Row4
@@ -104,6 +106,7 @@ open class AccountTransaction(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, AccountTransactionRecord>): this(Internal.createPathAlias(child, key), child, key, ACCOUNT_TRANSACTION, null)
     override fun getSchema(): Schema = Public.PUBLIC
+    override fun getIndexes(): List<Index> = listOf(ACCOUNT_TRANSACTION_BANK_ACCOUNT_ID_IDX)
     override fun getIdentity(): Identity<AccountTransactionRecord, Long?> = super.getIdentity() as Identity<AccountTransactionRecord, Long?>
     override fun getPrimaryKey(): UniqueKey<AccountTransactionRecord> = ACCOUNT_TRANSACTION_PKEY
     override fun getKeys(): List<UniqueKey<AccountTransactionRecord>> = listOf(ACCOUNT_TRANSACTION_PKEY)

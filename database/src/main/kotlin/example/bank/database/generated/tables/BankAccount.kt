@@ -6,6 +6,7 @@ package example.bank.database.generated.tables
 
 import example.bank.database.generated.Public
 import example.bank.database.generated.enums.BankAccountType
+import example.bank.database.generated.indexes.BANK_ACCOUNT_ACCOUNT_HOLDER_ID_IDX
 import example.bank.database.generated.keys.BANK_ACCOUNT_PKEY
 import example.bank.database.generated.keys.BANK_ACCOUNT__BANK_ACCOUNT_ACCOUNT_HOLDER_ID_FKEY
 import example.bank.database.generated.tables.records.BankAccountRecord
@@ -15,6 +16,7 @@ import kotlin.collections.List
 import org.jooq.Field
 import org.jooq.ForeignKey
 import org.jooq.Identity
+import org.jooq.Index
 import org.jooq.Name
 import org.jooq.Record
 import org.jooq.Row3
@@ -97,6 +99,7 @@ open class BankAccount(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, BankAccountRecord>): this(Internal.createPathAlias(child, key), child, key, BANK_ACCOUNT, null)
     override fun getSchema(): Schema = Public.PUBLIC
+    override fun getIndexes(): List<Index> = listOf(BANK_ACCOUNT_ACCOUNT_HOLDER_ID_IDX)
     override fun getIdentity(): Identity<BankAccountRecord, Long?> = super.getIdentity() as Identity<BankAccountRecord, Long?>
     override fun getPrimaryKey(): UniqueKey<BankAccountRecord> = BANK_ACCOUNT_PKEY
     override fun getKeys(): List<UniqueKey<BankAccountRecord>> = listOf(BANK_ACCOUNT_PKEY)

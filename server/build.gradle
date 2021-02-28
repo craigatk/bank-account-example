@@ -22,6 +22,8 @@ dependencies {
 
     implementation "ch.qos.logback:logback-classic:$logback_version"
 
+    implementation("org.apache.commons:commons-lang3:3.8.1") // For generating random string values
+
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
 

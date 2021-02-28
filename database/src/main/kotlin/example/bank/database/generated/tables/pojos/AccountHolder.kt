@@ -13,6 +13,7 @@ import java.io.Serializable
 @Suppress("UNCHECKED_CAST")
 data class AccountHolder(
     var id: Long? = null, 
+    var userName: String? = null, 
     var firstName: String? = null, 
     var lastName: String? = null
 ): Serializable {
@@ -31,6 +32,12 @@ data class AccountHolder(
                 return false
         }
         else if (id != o.id)
+            return false
+        if (userName === null) {
+            if (o.userName !== null)
+                return false
+        }
+        else if (userName != o.userName)
             return false
         if (firstName === null) {
             if (o.firstName !== null)
@@ -51,6 +58,7 @@ data class AccountHolder(
         val prime = 31
         var result = 1
         result = prime * result + (if (this.id === null) 0 else this.id.hashCode())
+        result = prime * result + (if (this.userName === null) 0 else this.userName.hashCode())
         result = prime * result + (if (this.firstName === null) 0 else this.firstName.hashCode())
         result = prime * result + (if (this.lastName === null) 0 else this.lastName.hashCode())
         return result
@@ -60,6 +68,7 @@ data class AccountHolder(
         val sb = StringBuilder("AccountHolder (")
 
         sb.append(id)
+        sb.append(", ").append(userName)
         sb.append(", ").append(firstName)
         sb.append(", ").append(lastName)
 
