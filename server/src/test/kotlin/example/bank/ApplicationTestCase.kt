@@ -30,7 +30,6 @@ open class ApplicationTestCase {
     fun createTestApplication(application: Application) {
 
         (application.environment.config as MapApplicationConfig).apply {
-            // Set here the properties
             put("ktor.datasource.username", System.getenv("DB_USERNAME") ?: "testuser")
             put("ktor.datasource.password", System.getenv("DB_PASSWORD") ?: "testpass")
             put("ktor.datasource.jdbcUrl", System.getenv("DB_URL") ?: "jdbc:postgresql://localhost:5433/bankaccountdb")

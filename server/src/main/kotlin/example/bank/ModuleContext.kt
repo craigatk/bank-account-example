@@ -3,7 +3,7 @@ package example.bank
 import com.zaxxer.hikari.HikariDataSource
 import org.jooq.DSLContext
 
-data class AppContext(
+data class ModuleContext(
     val dataSource: HikariDataSource,
     val dslContext: DSLContext
 )
