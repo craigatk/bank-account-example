@@ -9,3 +9,5 @@ Example application with the following tech stack:
 * [jOOQ](https://www.jooq.org/)
 * [Strikt](https://strikt.io/)
 * [k6](https://k6.io/)
+
+Blog post detailing integrating database access and management with Flyway and jOOQ into a Kotlin Ktor app: https://www.atkinsondev.com/post/database-jooq-flyway-ktor/
