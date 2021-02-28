@@ -6,6 +6,7 @@ import example.bank.database.generated.tables.daos.AccountTransactionDao
 import example.bank.database.generated.tables.daos.BankAccountDao
 import example.bank.database.generated.tables.pojos.AccountHolder
 import example.bank.database.generated.tables.pojos.BankAccount
+import org.apache.commons.lang3.RandomStringUtils
 import org.jooq.DSLContext
 
 class BankAccountTestData(dslContext: DSLContext) {
@@ -13,8 +14,9 @@ class BankAccountTestData(dslContext: DSLContext) {
     val bankAccountDao = BankAccountDao(dslContext.configuration())
     val accountTransactionDao = AccountTransactionDao(dslContext.configuration())
 
-    fun createAccountHolder(): AccountHolder {
+    fun createAccountHolder(userName: String = RandomStringUtils.randomAlphanumeric(16)): AccountHolder {
         val accountHolder = AccountHolder(
+            userName = userName,
             firstName = "Patrick",
             lastName = "McManus"
         )

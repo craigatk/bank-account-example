@@ -42,6 +42,21 @@ open class AccountHolderDao(configuration: Configuration?) : DAOImpl<AccountHold
     fun fetchOneById(value: Long): example.bank.database.generated.tables.pojos.AccountHolder? = fetchOne(AccountHolder.ACCOUNT_HOLDER.ID, value)
 
     /**
+     * Fetch records that have <code>user_name BETWEEN lowerInclusive AND upperInclusive</code>
+     */
+    fun fetchRangeOfUserName(lowerInclusive: String?, upperInclusive: String?): List<example.bank.database.generated.tables.pojos.AccountHolder> = fetchRange(AccountHolder.ACCOUNT_HOLDER.USER_NAME, lowerInclusive, upperInclusive)
+
+    /**
+     * Fetch records that have <code>user_name IN (values)</code>
+     */
+    fun fetchByUserName(vararg values: String): List<example.bank.database.generated.tables.pojos.AccountHolder> = fetch(AccountHolder.ACCOUNT_HOLDER.USER_NAME, *values)
+
+    /**
+     * Fetch a unique record that has <code>user_name = value</code>
+     */
+    fun fetchOneByUserName(value: String): example.bank.database.generated.tables.pojos.AccountHolder? = fetchOne(AccountHolder.ACCOUNT_HOLDER.USER_NAME, value)
+
+    /**
      * Fetch records that have <code>first_name BETWEEN lowerInclusive AND upperInclusive</code>
      */
     fun fetchRangeOfFirstName(lowerInclusive: String?, upperInclusive: String?): List<example.bank.database.generated.tables.pojos.AccountHolder> = fetchRange(AccountHolder.ACCOUNT_HOLDER.FIRST_NAME, lowerInclusive, upperInclusive)

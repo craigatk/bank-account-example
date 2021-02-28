@@ -5,7 +5,9 @@ package example.bank.database.generated.tables
 
 
 import example.bank.database.generated.Public
+import example.bank.database.generated.indexes.ACCOUNT_HOLDER_USER_NAME_IDX
 import example.bank.database.generated.keys.ACCOUNT_HOLDER_PKEY
+import example.bank.database.generated.keys.ACCOUNT_HOLDER_USER_NAME_KEY
 import example.bank.database.generated.tables.records.AccountHolderRecord
 
 import kotlin.collections.List
@@ -13,9 +15,10 @@ import kotlin.collections.List
 import org.jooq.Field
 import org.jooq.ForeignKey
 import org.jooq.Identity
+import org.jooq.Index
 import org.jooq.Name
 import org.jooq.Record
-import org.jooq.Row3
+import org.jooq.Row4
 import org.jooq.Schema
 import org.jooq.Table
 import org.jooq.TableField
@@ -66,6 +69,11 @@ open class AccountHolder(
     val ID: TableField<AccountHolderRecord, Long?> = createField(DSL.name("id"), SQLDataType.BIGINT.nullable(false).identity(true), this, "")
 
     /**
+     * The column <code>public.account_holder.user_name</code>.
+     */
+    val USER_NAME: TableField<AccountHolderRecord, String?> = createField(DSL.name("user_name"), SQLDataType.CLOB.nullable(false), this, "")
+
+    /**
      * The column <code>public.account_holder.first_name</code>.
      */
     val FIRST_NAME: TableField<AccountHolderRecord, String?> = createField(DSL.name("first_name"), SQLDataType.CLOB, this, "")
@@ -95,9 +103,10 @@ open class AccountHolder(
 
     constructor(child: Table<out Record>, key: ForeignKey<out Record, AccountHolderRecord>): this(Internal.createPathAlias(child, key), child, key, ACCOUNT_HOLDER, null)
     override fun getSchema(): Schema = Public.PUBLIC
+    override fun getIndexes(): List<Index> = listOf(ACCOUNT_HOLDER_USER_NAME_IDX)
     override fun getIdentity(): Identity<AccountHolderRecord, Long?> = super.getIdentity() as Identity<AccountHolderRecord, Long?>
     override fun getPrimaryKey(): UniqueKey<AccountHolderRecord> = ACCOUNT_HOLDER_PKEY
-    override fun getKeys(): List<UniqueKey<AccountHolderRecord>> = listOf(ACCOUNT_HOLDER_PKEY)
+    override fun getKeys(): List<UniqueKey<AccountHolderRecord>> = listOf(ACCOUNT_HOLDER_PKEY, ACCOUNT_HOLDER_USER_NAME_KEY)
     override fun `as`(alias: String): AccountHolder = AccountHolder(DSL.name(alias), this)
     override fun `as`(alias: Name): AccountHolder = AccountHolder(alias, this)
 
@@ -112,7 +121,7 @@ open class AccountHolder(
     override fun rename(name: Name): AccountHolder = AccountHolder(name, null)
 
     // -------------------------------------------------------------------------
-    // Row3 type methods
+    // Row4 type methods
     // -------------------------------------------------------------------------
-    override fun fieldsRow(): Row3<Long?, String?, String?> = super.fieldsRow() as Row3<Long?, String?, String?>
+    override fun fieldsRow(): Row4<Long?, String?, String?, String?> = super.fieldsRow() as Row4<Long?, String?, String?, String?>
 }
