@@ -17,3 +17,5 @@ target
 *.log
 
 minio
+
+projektor_report.json
